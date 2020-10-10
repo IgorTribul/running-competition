@@ -3,33 +3,40 @@ package ru.geekbrains.running.competition.service;
 
 import ru.geekbrains.running.competition.model.obstacle.Obstacle;
 import ru.geekbrains.running.competition.model.runner.Runner;
-import ru.geekbrains.running.competition.repository.ObstacleRepository;
-import ru.geekbrains.running.competition.repository.RunnerRepository;
+import ru.geekbrains.running.competition.repository.ObstacleRepo;
+import ru.geekbrains.running.competition.repository.RunnerRepo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Competition {
-    private ObstacleRepository obstacleRepository;
-    private RunnerRepository runnerRepository;
+    private ObstacleRepo obstacleRepo;
+    private RunnerRepo runnerRepo;
 
-    public Competition(ObstacleRepository obstacleRepository, RunnerRepository runnerRepository) {
-        this.obstacleRepository = obstacleRepository;
-        this.runnerRepository = runnerRepository;
+    public Competition(ObstacleRepo obstacleRepo, RunnerRepo runnerRepo) {
+        this.obstacleRepo = obstacleRepo;
+        this.runnerRepo = runnerRepo;
     }
 
-
-    public boolean isVictory() {
-        if (obstacleRepository.getObstacle().check(runnerRepository.getRunner()))
-            return runnerRepository.getRunner().isSuccess();
-        ;
-//
-//        for (int i = 0; i < obstacles.length; i++) {
-//            for (Runner runner : runners) {
-//                if (runner.isSuccess()) {
-//                    obstacles[i].check(runner);
-//                }
-//                return runner.isSuccess();
-//            }
-//        }
-    return false;
+    public List<Runner> isVictory() {
+        List<Runner> winnerList = new ArrayList<Runner>();
+        winnerList.addAll(runnerRepo.getRunners());
+        for (Obstacle o : obstacleRepo.getObstacles()) {
+            for (Runner r : runnerRepo.getRunners()) {
+                switch (o.getType()) {
+                    case WALL:
+                        if (r.getJump() < o.getValue()) {
+                            winnerList.remove(r);
+                            break;
+                        }
+                    case TREADMILL:
+                        if (r.getRun() < o.getValue()) {
+                            winnerList.remove(r);
+                            break;
+                        }
+                }
+            }
+        }
+        return winnerList;
     }
-
 }

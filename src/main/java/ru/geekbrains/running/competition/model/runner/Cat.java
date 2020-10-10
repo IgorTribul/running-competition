@@ -2,35 +2,45 @@ package ru.geekbrains.running.competition.model.runner;
 
 public class Cat implements Runner {
 
+    private String name;
     private int maxLength;
     private int maxHeight;
-    private boolean success;
 
 
-    public Cat(int maxLength, int maxHeight) {
+    public Cat (String name, int maxLength, int maxHeight) {
+        this.name = name;
         this.maxLength = maxLength;
         this.maxHeight = maxHeight;
     }
 
-    @Override
-    public boolean isSuccess() {
-        return success;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
-    public int getMaxLength() {
+    public int getRun (){
         return maxLength;
     }
 
+
     @Override
-    public int getMaxHeight() {
+    public int getJump() {
         return maxHeight;
     }
 
     @Override
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public String toString() {
+        return "Cat{" +
+                "name='" + name + '\'' +
+                ", maxLength=" + maxLength +
+                ", maxHeight=" + maxHeight +
+                '}';
     }
+
 
 }
 

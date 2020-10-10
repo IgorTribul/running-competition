@@ -1,23 +1,28 @@
 package ru.geekbrains.running.competition.model.obstacle;
 
-import ru.geekbrains.running.competition.model.obstacle.Obstacle;
-import ru.geekbrains.running.competition.model.runner.Runner;
-
 public class Wall implements Obstacle {
 
-    private int height;
+    private ObstacleType type;
+    private int length;
 
-    public Wall(int height) {
-        this.height = height;
+    public Wall(ObstacleType obstacleType, int length) {
+        this.type = obstacleType;
+        this.length = length;
     }
 
-    public int getLength() {
-        return height;
+    public ObstacleType getType() {
+        return type;
     }
 
-    @Override
-    public boolean check(Runner runner) {
-        runner.setSuccess(runner.getMaxHeight() >= height);
-        return runner.isSuccess();
+    public void setType(ObstacleType type) {
+        this.type = type;
+    }
+
+    public int getValue() {
+        return length;
+    }
+
+    public void setValue(int length) {
+        this.length = length;
     }
 }
